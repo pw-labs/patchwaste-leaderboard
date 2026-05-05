@@ -1,0 +1,16 @@
+{
+  "game_slug": "halo-mcc",
+  "version": "Halo 2 Anniversary update rebuild",
+  "released": "2020-05-12",
+  "bytes_downloaded": 75161927680,
+  "bytes_actual_change": 1073741824,
+  "cause_tag": "mega_archive_reseal",
+  "confidence": "reported",
+  "sources": [
+    {
+      "label": "343 Industries community update on patch packaging",
+      "url": "https://www.halowaypoint.com/news/halo-the-master-chief-collection"
+    }
+  ],
+  "summary": "Update to Halo 2 Anniversary content within MCC required a ~70 GB download for a comparatively small change because the bundled package required full repackaging. 343 Industries acknowledged the packaging cost in community updates. Numbers estimated, pending depot verification."
+}

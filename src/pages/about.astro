@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About · patchwaste leaderboard"
+      description="Why this leaderboard exists and who runs it.">
+  <h1 class="text-3xl font-mono tracking-tight mb-6">About</h1>
+
+  <section class="mb-8">
+    <h2 class="font-mono text-lg mb-2">Why this exists</h2>
+    <p class="text-mute mb-3">
+      In 2024, Enshrouded shipped a 299 KB content change that triggered a 30.6 GB Steam
+      download. The studio publicly acknowledged the cause: a single mega-archive that
+      contained nearly all game assets had to be resealed for any change inside it.
+    </p>
+    <p class="text-mute mb-3">
+      The Enshrouded pattern is not unusual. It is the default behaviour of most game
+      build pipelines. Studios pay for the wasted CDN bandwidth. Players pay for it in
+      time, data caps, and shelf space. Nobody pays attention to it because nobody measures it.
+    </p>
+    <p class="text-mute">
+      This leaderboard makes the cost visible.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="font-mono text-lg mb-2">What we do</h2>
+    <ul class="text-mute space-y-2 list-disc list-inside">
+      <li>Catalogue notable patch waste cases with public sources.</li>
+      <li>Publish the methodology so anyone can reproduce or challenge a number.</li>
+      <li>Update entries weekly as depot manifest verification catches up with the seed list.</li>
+      <li>Tag the cause so studios facing the same failure mode can see where to look.</li>
+    </ul>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="font-mono text-lg mb-2">What we do not do</h2>
+    <ul class="text-mute space-y-2 list-disc list-inside">
+      <li>Editorial blame. Patch sizes are an engineering artefact, not a moral verdict.</li>
+      <li>Closed metrics. Every figure cites a public source.</li>
+      <li>Mobile, console-exclusive, or non-Steam titles.</li>
+    </ul>
+  </section>
+
+  <section class="mb-8 border border-line p-6 bg-line/20">
+    <h2 class="font-mono text-lg mb-2">The product behind the leaderboard</h2>
+    <p class="text-sm text-mute mb-3">
+      The leaderboard is run by the team behind <strong>patchwaste</strong>, a Rust
+      CLI and GitHub Actions gate that catches patch-size regressions in your CI
+      pipeline before the patch ships. Built for Unreal and Unity studios.
+    </p>
+    <a href="https://github.com/pw-labs/patchwaste"
+       class="inline-block text-sm font-mono underline hover:text-rust">
+      patchwaste on GitHub
+    </a>
+    <span class="mx-2 text-mute">·</span>
+    <a href="/signup/"
+       class="inline-block text-sm font-mono underline hover:text-rust">
+      Free for indie studios
+    </a>
+  </section>
+
+  <section>
+    <h2 class="font-mono text-lg mb-2">Contact</h2>
+    <p class="text-mute text-sm">
+      Corrections, contributions, and studio queries via the
+      <a href="https://github.com/pw-labs/patchwaste" class="underline hover:text-rust">patchwaste repository</a>.
+    </p>
+  </section>
+</Base>

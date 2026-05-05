@@ -1,0 +1,9 @@
+{
+  "slug": "cyberpunk-2077",
+  "title": "Cyberpunk 2077",
+  "publisher": "CD Projekt",
+  "developer": "CD Projekt Red",
+  "engine": "REDengine",
+  "steam_app_id": 1091500,
+  "notes": "Major patches frequently rewrite large archive files."
+}

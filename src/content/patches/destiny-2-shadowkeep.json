@@ -1,0 +1,16 @@
+{
+  "game_slug": "destiny-2",
+  "version": "Shadowkeep / New Light transition",
+  "released": "2019-10-01",
+  "bytes_downloaded": 88046829568,
+  "bytes_actual_change": 21474836480,
+  "cause_tag": "engine_upgrade",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Bungie engineering note on Shadowkeep download size",
+      "url": "https://www.bungie.net/en/Explore/Detail/News/48140"
+    }
+  ],
+  "summary": "Shadowkeep transition required a ~80 GB download due to engine and asset reshuffle. Estimated; pending SteamDB depot verification."
+}

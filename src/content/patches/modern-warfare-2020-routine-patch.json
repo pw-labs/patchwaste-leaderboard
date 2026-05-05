@@ -1,0 +1,16 @@
+{
+  "game_slug": "modern-warfare",
+  "version": "Mid-season balance update",
+  "released": "2020-05-19",
+  "bytes_downloaded": 19327352832,
+  "bytes_actual_change": 524288000,
+  "cause_tag": "mega_archive_reseal",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Eurogamer reporting on patch-size complaints",
+      "url": "https://www.eurogamer.net/articles/2020-05-19-call-of-duty-modern-warfare-warzone-patch-notes"
+    }
+  ],
+  "summary": "Routine balance update reported around 18 GB download for what publishers characterised as a small content change. Estimated; depot manifest verification pending."
+}

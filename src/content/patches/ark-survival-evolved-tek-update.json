@@ -1,0 +1,16 @@
+{
+  "game_slug": "ark-survival-evolved",
+  "version": "Tek Tier expansion patch",
+  "released": "2017-03-15",
+  "bytes_downloaded": 64424509440,
+  "bytes_actual_change": 1610612736,
+  "cause_tag": "mega_archive_reseal",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Studio Wildcard Steam community announcement",
+      "url": "https://steamcommunity.com/app/346110/announcements/"
+    }
+  ],
+  "summary": "Tek Tier patch widely reported to require ~60 GB redownload for ~1.5 GB of new content. Estimated; pending SteamDB depot manifest cross-check."
+}

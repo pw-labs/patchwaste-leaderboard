@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import ConfidenceBadge from '../../../components/ConfidenceBadge.astro';
+import { formatBytes, formatRatio, wasteRatio, causeLabel, slugify } from '../../../lib/format.ts';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games');
+  const gameMap = new Map(games.map(g => [g.data.slug, g.data]));
+  const patches = await getCollection('patches');
+  return patches.map(p => ({
+    params: {
+      slug: p.data.game_slug,
+      version: slugify(p.data.version)
+    },
+    props: {
+      patch: p.data,
+      game: gameMap.get(p.data.game_slug)
+    }
+  }));
+}
+
+const { patch, game } = Astro.props;
+const ratio = wasteRatio(patch.bytes_downloaded, patch.bytes_actual_change);
+const wastedBytes = patch.bytes_downloaded - patch.bytes_actual_change;
+---
+<Base title={`${game?.title ?? patch.game_slug} ${patch.version} · patchwaste`}
+      description={patch.summary}>
+  <nav class="text-xs text-mute mb-4">
+    <a href="/" class="underline">Leaderboard</a> /
+    <a href={`/games/${patch.game_slug}/`} class="underline">{game?.title ?? patch.game_slug}</a> /
+    {patch.version}
+  </nav>
+
+  <header class="mb-8">
+    <div class="flex items-center gap-3 flex-wrap">
+      <h1 class="text-3xl font-mono tracking-tight">{game?.title ?? patch.game_slug}</h1>
+      <ConfidenceBadge confidence={patch.confidence} />
+    </div>
+    <div class="mt-2 text-mute">
+      {patch.version} · released {patch.released}
+    </div>
+  </header>
+
+  <section class="grid md:grid-cols-2 gap-6 mb-10">
+    <div class="border border-line p-6">
+      <div class="text-xs text-mute uppercase tracking-wider font-mono mb-2">
+        Bytes shipped to players
+      </div>
+      <div class="text-4xl font-mono">{formatBytes(patch.bytes_downloaded)}</div>
+      <div class="text-sm text-mute mt-2">downloaded by every active player</div>
+    </div>
+    <div class="border border-line p-6">
+      <div class="text-xs text-mute uppercase tracking-wider font-mono mb-2">
+        Bytes of actual change
+      </div>
+      <div class="text-4xl font-mono">{formatBytes(patch.bytes_actual_change)}</div>
+      <div class="text-sm text-mute mt-2">new or modified content delivered</div>
+    </div>
+  </section>
+
+  <section class="border-2 border-rust p-6 mb-10">
+    <div class="text-xs uppercase tracking-wider font-mono text-rust mb-2">
+      Waste ratio
+    </div>
+    <div class="text-6xl font-mono text-rust">{formatRatio(ratio)}</div>
+    <div class="mt-3 text-sm text-mute">
+      {formatBytes(wastedBytes)} of every player's bandwidth delivered no new content.
+    </div>
+    <div class="mt-3 text-sm">
+      Likely cause: <span class="font-mono">{causeLabel(patch.cause_tag)}</span>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-sm text-mute uppercase tracking-wider mb-3">Story</h2>
+    <p class="text-ink leading-relaxed">{patch.summary}</p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-sm text-mute uppercase tracking-wider mb-3">Sources</h2>
+    <ul class="space-y-2">
+      {patch.sources.map(s => (
+        <li class="text-sm">
+          <a href={s.url} class="underline hover:text-rust" rel="nofollow noopener">
+            {s.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="border-t border-line pt-6">
+    <p class="text-sm text-mute">
+      Methodology: see <a href="/methodology/" class="underline hover:text-rust">how the waste ratio is computed</a>.
+      Every entry can be challenged. Open a pull request with depot manifest evidence.
+    </p>
+  </section>
+</Base>

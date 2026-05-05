@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leaderboard.patchwaste.dev/sitemap-index.xml

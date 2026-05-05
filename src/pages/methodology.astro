@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Methodology · patchwaste leaderboard"
+      description="How patch waste ratio is calculated and what each confidence label means.">
+  <h1 class="text-3xl font-mono tracking-tight mb-6">Methodology</h1>
+
+  <section class="prose max-w-none mb-10">
+    <h2 class="font-mono text-lg mt-0">The metric</h2>
+    <pre class="bg-ink text-bone p-4 overflow-x-auto text-sm font-mono"><code>waste_ratio = bytes_downloaded / bytes_actual_change</code></pre>
+
+    <p class="text-mute text-sm mt-2">
+      A ratio of 1 means every byte players downloaded delivered new or modified content.
+      A ratio of 50 means players downloaded fifty bytes for every byte of change.
+      A ratio of 200 means a tiny content tweak triggered a near-complete redownload of the game.
+    </p>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-lg mb-2">Inputs</h2>
+    <table class="text-sm w-full border border-line">
+      <thead class="bg-line/40">
+        <tr>
+          <th class="text-left p-3">Field</th>
+          <th class="text-left p-3">Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-t border-line">
+          <td class="p-3 font-mono">bytes_downloaded</td>
+          <td class="p-3">Steam depot manifest delta size verified through steamcmd, or studio acknowledgement, or contemporaneous press reporting.</td>
+        </tr>
+        <tr class="border-t border-line">
+          <td class="p-3 font-mono">bytes_actual_change</td>
+          <td class="p-3">Sum of new and modified asset sizes inferred from depot manifest, patch notes, or studio statement. Repacked unchanged assets do not count.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-lg mb-2">Confidence labels</h2>
+    <ul class="space-y-3 text-sm">
+      <li>
+        <span class="font-mono uppercase text-xs bg-ink text-bone px-2 py-0.5 rounded">Verified</span>
+        Both numbers reproducible from the public depot manifest using steamcmd.
+      </li>
+      <li>
+        <span class="font-mono uppercase text-xs bg-mute/20 px-2 py-0.5 rounded">Reported</span>
+        At least one number is from a primary source statement (studio post, engineering blog, official patch note) but not yet reproduced from the depot manifest.
+      </li>
+      <li>
+        <span class="font-mono uppercase text-xs bg-rust/10 text-rust border border-rust/30 px-2 py-0.5 rounded">Estimated</span>
+        Numbers come from contemporaneous press reporting or community measurement and have not been cross-checked against depot data. Treat as upper bound on signal, not as fact.
+      </li>
+    </ul>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-lg mb-2">What we exclude</h2>
+    <ul class="text-sm space-y-2 list-disc list-inside text-mute">
+      <li>Mobile patches (different distribution stack).</li>
+      <li>Indie titles below 5,000 concurrent users (signal too noisy).</li>
+      <li>Engine versions older than five years where depot history is unreliable.</li>
+      <li>Games delivered outside Steam without comparable manifest visibility.</li>
+    </ul>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-lg mb-2">Cause taxonomy</h2>
+    <p class="text-sm text-mute mb-3">
+      Each entry carries a likely cause tag. The taxonomy is small on purpose; the goal is rough classification, not forensic blame.
+    </p>
+    <ul class="text-sm space-y-2">
+      <li><span class="font-mono">asset_repacking</span> &middot; unchanged assets shuffled inside an archive container</li>
+      <li><span class="font-mono">shader_cache_regen</span> &middot; engine forced redistribution of compiled shaders</li>
+      <li><span class="font-mono">mega_archive_reseal</span> &middot; single large archive rebuilt for any internal change</li>
+      <li><span class="font-mono">engine_upgrade</span> &middot; major engine version migration touching most binaries</li>
+      <li><span class="font-mono">localisation_repack</span> &middot; locale assets rebundled across all languages</li>
+      <li><span class="font-mono">unknown</span> &middot; data insufficient to classify</li>
+    </ul>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="font-mono text-lg mb-2">Challenges and corrections</h2>
+    <p class="text-sm text-mute">
+      Every entry is challengeable. If a studio or community member can show the
+      depot manifest contradicts the published numbers, the entry is updated or
+      withdrawn within seven days. Send corrections through the patchwaste GitHub
+      repository.
+    </p>
+  </section>
+
+  <section class="border border-line p-4 bg-line/20 text-sm">
+    <strong>Caveat for the seed corpus:</strong> the initial entries are heavily
+    weighted toward <em>estimated</em> confidence because depot manifest verification
+    is being done in batches. The leaderboard rankings will change as entries are
+    upgraded to <em>reported</em> or <em>verified</em> tiers.
+  </section>
+</Base>

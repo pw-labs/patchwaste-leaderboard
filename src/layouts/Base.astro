@@ -1,0 +1,75 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Public ranking of game patches by bytes redownloaded per byte of actual content change.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImage = new URL('/og.png', Astro.site).toString();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+  </head>
+  <body class="bg-bone text-ink min-h-screen flex flex-col">
+    <header class="border-b border-line">
+      <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+        <a href="/" class="font-mono text-xl tracking-tight">
+          patch<span class="text-rust">|</span>waste<span class="text-mute"> · leaderboard</span>
+        </a>
+        <nav class="text-sm flex gap-6">
+          <a href="/" class="hover:text-rust">Leaderboard</a>
+          <a href="/methodology/" class="hover:text-rust">Methodology</a>
+          <a href="/about/" class="hover:text-rust">About</a>
+        </nav>
+      </div>
+    </header>
+    <main class="flex-1 max-w-5xl mx-auto px-6 py-10 w-full">
+      <slot />
+    </main>
+    <footer class="border-t border-line bg-ink text-bone">
+      <div class="max-w-5xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-8">
+        <div>
+          <p class="font-mono text-lg">Studios: stop shipping waste before players see it.</p>
+          <p class="text-sm text-line/80 mt-2">
+            Free CI gate. Pre-release patch analysis on every Unreal or Unity build.
+            Catch the asset-repack reseal before your next 30 GB redownload trends on Reddit.
+          </p>
+        </div>
+        <div class="flex flex-col items-start md:items-end justify-center">
+          <a href="/signup/"
+             class="inline-block bg-rust hover:bg-rust/80 text-bone font-mono px-5 py-3 rounded">
+            Get patchwaste-cloud free
+          </a>
+          <p class="text-xs text-line/60 mt-3">Free for indie studios under 50k WAU.</p>
+        </div>
+      </div>
+      <div class="border-t border-line/20">
+        <div class="max-w-5xl mx-auto px-6 py-4 text-xs text-line/60 flex flex-wrap gap-4 justify-between">
+          <span>patch|waste leaderboard · independent analysis</span>
+          <span>Methodology open source · contributions welcome</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+<style is:global>
+  html { font-family: system-ui, sans-serif; }
+  a { text-decoration: none; }
+  table { border-collapse: collapse; }
+</style>

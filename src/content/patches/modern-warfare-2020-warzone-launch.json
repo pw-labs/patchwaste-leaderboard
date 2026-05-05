@@ -1,0 +1,16 @@
+{
+  "game_slug": "modern-warfare",
+  "version": "Warzone launch + S3 update",
+  "released": "2020-04-08",
+  "bytes_downloaded": 60129542144,
+  "bytes_actual_change": 12884901888,
+  "cause_tag": "mega_archive_reseal",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Eurogamer coverage of recurring CoD patch sizes",
+      "url": "https://www.eurogamer.net/articles/2020-04-08-call-of-duty-modern-warfare-warzone-update-size"
+    }
+  ],
+  "summary": "Season 3 plus Warzone integration triggered a multi-tens-of-GB download. Numbers are estimates from press reports of the period; pending verification against SteamDB depot manifest history."
+}

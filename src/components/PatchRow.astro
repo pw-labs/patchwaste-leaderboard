@@ -1,0 +1,44 @@
+---
+import { formatBytes, formatRatio, wasteRatio, causeLabel, slugify } from '../lib/format.ts';
+import ConfidenceBadge from './ConfidenceBadge.astro';
+interface Props {
+  rank?: number;
+  game_title: string;
+  game_slug: string;
+  version: string;
+  released: string;
+  bytes_downloaded: number;
+  bytes_actual_change: number;
+  cause_tag: string;
+  confidence: 'verified' | 'reported' | 'estimated';
+}
+const p = Astro.props;
+const ratio = wasteRatio(p.bytes_downloaded, p.bytes_actual_change);
+const slug = slugify(p.version);
+---
+<a href={`/games/${p.game_slug}/${slug}/`}
+   class="grid grid-cols-12 gap-4 items-center py-4 border-b border-line hover:bg-line/30 transition px-2 -mx-2">
+  {p.rank !== undefined && (
+    <div class="col-span-1 font-mono text-2xl text-mute">{p.rank}</div>
+  )}
+  <div class={p.rank !== undefined ? 'col-span-5' : 'col-span-6'}>
+    <div class="font-medium">{p.game_title}</div>
+    <div class="text-xs text-mute mt-0.5">{p.version} · {p.released}</div>
+    <div class="mt-1">
+      <ConfidenceBadge confidence={p.confidence} />
+      <span class="text-[10px] text-mute ml-2 font-mono uppercase tracking-wider">
+        {causeLabel(p.cause_tag)}
+      </span>
+    </div>
+  </div>
+  <div class="col-span-3 text-right">
+    <div class="font-mono text-sm">{formatBytes(p.bytes_downloaded)}</div>
+    <div class="text-xs text-mute">downloaded</div>
+  </div>
+  <div class="col-span-3 text-right">
+    <div class={`font-mono text-2xl ${ratio >= 50 ? 'text-rust' : 'text-ink'}`}>
+      {formatRatio(ratio)}
+    </div>
+    <div class="text-xs text-mute">waste ratio</div>
+  </div>
+</a>

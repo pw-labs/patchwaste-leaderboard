@@ -1,0 +1,16 @@
+{
+  "game_slug": "enshrouded",
+  "version": "Asset repack incident, 2024",
+  "released": "2024-02-09",
+  "bytes_downloaded": 32856325324,
+  "bytes_actual_change": 306176,
+  "cause_tag": "asset_repacking",
+  "confidence": "reported",
+  "sources": [
+    {
+      "label": "Keen Games dev acknowledgement (Steam community)",
+      "url": "https://steamcommunity.com/app/1203620"
+    }
+  ],
+  "summary": "Keen Games publicly acknowledged that a tiny content change triggered a near-30 GB redownload because the build pipeline resealed a single mega-archive that contained nearly all game assets. Reference case for the asset-repacking failure mode."
+}

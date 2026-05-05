@@ -1,0 +1,16 @@
+{
+  "game_slug": "cyberpunk-2077",
+  "version": "1.5 Next-Gen Update",
+  "released": "2022-02-15",
+  "bytes_downloaded": 47244640256,
+  "bytes_actual_change": 8589934592,
+  "cause_tag": "mega_archive_reseal",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "CD Projekt Red 1.5 patch notes",
+      "url": "https://www.cyberpunk.net/en/news/41435/patch-1-5-next-generation-update-list-of-changes"
+    }
+  ],
+  "summary": "Major REDengine archive rewrite for next-gen-equivalent visuals. Estimated ~44 GB download for ~8 GB of changed content based on community patch-size reports. Pending depot verification."
+}

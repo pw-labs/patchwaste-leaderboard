@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import PatchRow from '../../../components/PatchRow.astro';
+import { wasteRatio, formatRatio, formatBytes } from '../../../lib/format.ts';
+
+export async function getStaticPaths() {
+  const games = await getCollection('games');
+  return games.map(g => ({ params: { slug: g.data.slug }, props: { game: g.data } }));
+}
+
+const { game } = Astro.props;
+const patches = (await getCollection('patches'))
+  .filter(p => p.data.game_slug === game.slug)
+  .map(p => p.data)
+  .sort((a, b) =>
+    wasteRatio(b.bytes_downloaded, b.bytes_actual_change) -
+    wasteRatio(a.bytes_downloaded, a.bytes_actual_change)
+  );
+
+const totalDownloaded = patches.reduce((s, p) => s + p.bytes_downloaded, 0);
+const totalChange = patches.reduce((s, p) => s + p.bytes_actual_change, 0);
+const lifetimeRatio = totalChange > 0 ? totalDownloaded / totalChange : 0;
+---
+<Base title={`${game.title} · patchwaste leaderboard`} description={`Patch waste history for ${game.title}.`}>
+  <nav class="text-xs text-mute mb-4">
+    <a href="/" class="underline">Leaderboard</a> / {game.title}
+  </nav>
+
+  <header class="mb-8">
+    <h1 class="text-3xl font-mono tracking-tight">{game.title}</h1>
+    <div class="mt-2 text-sm text-mute">
+      {game.publisher} · {game.engine} engine
+      {game.steam_app_id && (
+        <span> · Steam App {game.steam_app_id}</span>
+      )}
+    </div>
+    {game.notes && (
+      <p class="mt-3 text-sm text-mute max-w-2xl">{game.notes}</p>
+    )}
+  </header>
+
+  <section class="grid grid-cols-3 gap-4 mb-10">
+    <div class="border border-line p-4">
+      <div class="text-xs text-mute uppercase tracking-wider font-mono">Patches indexed</div>
+      <div class="text-2xl font-mono mt-1">{patches.length}</div>
+    </div>
+    <div class="border border-line p-4">
+      <div class="text-xs text-mute uppercase tracking-wider font-mono">Total downloaded</div>
+      <div class="text-2xl font-mono mt-1">{formatBytes(totalDownloaded)}</div>
+    </div>
+    <div class="border border-line p-4">
+      <div class="text-xs text-mute uppercase tracking-wider font-mono">Lifetime ratio</div>
+      <div class={`text-2xl font-mono mt-1 ${lifetimeRatio >= 50 ? 'text-rust' : ''}`}>
+        {formatRatio(lifetimeRatio)}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="font-mono text-sm text-mute uppercase tracking-wider mb-2">Patch history</h2>
+    {patches.length === 0 && (
+      <p class="text-mute text-sm">No patches indexed yet.</p>
+    )}
+    {patches.map(p => (
+      <PatchRow
+        game_title={game.title}
+        game_slug={game.slug}
+        version={p.version}
+        released={p.released}
+        bytes_downloaded={p.bytes_downloaded}
+        bytes_actual_change={p.bytes_actual_change}
+        cause_tag={p.cause_tag}
+        confidence={p.confidence}
+      />
+    ))}
+  </section>
+</Base>

@@ -1,0 +1,16 @@
+{
+  "game_slug": "rainbow-six-siege",
+  "version": "Year 8 Season 4 Operation Deep Freeze",
+  "released": "2023-12-05",
+  "bytes_downloaded": 18253611008,
+  "bytes_actual_change": 2147483648,
+  "cause_tag": "asset_repacking",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Ubisoft Year 8 Season 4 patch notes",
+      "url": "https://www.ubisoft.com/en-gb/game/rainbow-six/siege/news-updates"
+    }
+  ],
+  "summary": "Seasonal update reported around 17 GB download. Estimated actual content delta ~2 GB for new map and cosmetics. Pending depot cross-check."
+}

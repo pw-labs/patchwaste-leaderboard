@@ -1,0 +1,19 @@
+---
+interface Props {
+  confidence: 'verified' | 'reported' | 'estimated';
+}
+const { confidence } = Astro.props;
+const styles: Record<string, string> = {
+  verified: 'bg-ink text-bone',
+  reported: 'bg-mute/20 text-ink',
+  estimated: 'bg-rust/10 text-rust border border-rust/30'
+};
+const label: Record<string, string> = {
+  verified: 'Verified',
+  reported: 'Reported',
+  estimated: 'Estimated'
+};
+---
+<span class={`inline-block text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded ${styles[confidence]}`}>
+  {label[confidence]}
+</span>

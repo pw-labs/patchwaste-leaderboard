@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Get patchwaste-cloud · free for indie studios"
+      description="Free CI gate for Unreal and Unity studios. Catch patch waste before players see it.">
+  <h1 class="text-3xl font-mono tracking-tight mb-4">
+    Catch waste <span class="text-rust">before</span> players see it.
+  </h1>
+  <p class="text-mute max-w-2xl mb-8">
+    Drop the patchwaste GitHub Action into your build pipeline. Every cooked or staged build
+    gets a comment showing redownload size, asset-pack hot spots, and an estimate of the
+    bandwidth cost per active player. Free for studios under 50,000 weekly active users.
+  </p>
+
+  <form id="signup-form"
+        action="/api/signup"
+        method="post"
+        class="border border-line p-6 max-w-xl space-y-4">
+    <div>
+      <label for="email" class="block text-sm font-mono mb-1">Work email</label>
+      <input id="email" name="email" type="email" required
+             class="w-full border border-line px-3 py-2 font-mono"
+             placeholder="you@studio.example" />
+    </div>
+    <div>
+      <label for="studio" class="block text-sm font-mono mb-1">Studio name</label>
+      <input id="studio" name="studio" type="text" required
+             class="w-full border border-line px-3 py-2 font-mono"
+             placeholder="Your studio" />
+    </div>
+    <div>
+      <label for="engine" class="block text-sm font-mono mb-1">Engine</label>
+      <select id="engine" name="engine" required
+              class="w-full border border-line px-3 py-2 font-mono">
+        <option value="">Select...</option>
+        <option value="unreal">Unreal</option>
+        <option value="unity">Unity</option>
+        <option value="proprietary">Proprietary</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div>
+      <label for="wau" class="block text-sm font-mono mb-1">Approximate weekly active users</label>
+      <select id="wau" name="wau" required
+              class="w-full border border-line px-3 py-2 font-mono">
+        <option value="">Select...</option>
+        <option value="lt_10k">Under 10k</option>
+        <option value="10k_50k">10k to 50k</option>
+        <option value="50k_500k">50k to 500k</option>
+        <option value="gt_500k">Over 500k</option>
+      </select>
+    </div>
+    <button type="submit"
+            class="bg-rust text-bone font-mono px-5 py-3 rounded hover:bg-rust/80 w-full">
+      Request free access
+    </button>
+    <p class="text-xs text-mute">
+      No spam. We email when the CI gate is ready for your engine.
+    </p>
+  </form>
+
+  <section id="signup-success" class="hidden mt-8 border border-rust p-6">
+    <h2 class="font-mono text-lg text-rust">Got it.</h2>
+    <p class="text-sm text-mute mt-2">
+      We will email you when patchwaste-cloud onboarding opens for your engine.
+    </p>
+  </section>
+
+  <section class="mt-12 grid md:grid-cols-3 gap-6 text-sm">
+    <div>
+      <h3 class="font-mono mb-1">CI native</h3>
+      <p class="text-mute">Drop-in GitHub Action. Reads SteamPipe preview output. Posts a PR comment.</p>
+    </div>
+    <div>
+      <h3 class="font-mono mb-1">Engine aware</h3>
+      <p class="text-mute">Tracks Unreal pak files and Unity asset bundles. Flags repack hot spots.</p>
+    </div>
+    <div>
+      <h3 class="font-mono mb-1">Honest</h3>
+      <p class="text-mute">Thresholds you set. No vendor lock-in. Open-core.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('signup-form') as HTMLFormElement | null;
+  const success = document.getElementById('signup-success');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.classList.add('hidden');
+      success?.classList.remove('hidden');
+    });
+  }
+</script>

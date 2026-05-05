@@ -1,0 +1,9 @@
+{
+  "slug": "apex-legends",
+  "title": "Apex Legends",
+  "publisher": "Electronic Arts",
+  "developer": "Respawn Entertainment",
+  "engine": "Source",
+  "steam_app_id": 1172470,
+  "notes": "Heavily-modified Source engine; community pattern of multi-GB seasonal patches."
+}

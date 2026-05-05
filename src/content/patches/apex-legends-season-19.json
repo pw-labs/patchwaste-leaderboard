@@ -1,0 +1,16 @@
+{
+  "game_slug": "apex-legends",
+  "version": "Season 19 Ignite",
+  "released": "2023-10-31",
+  "bytes_downloaded": 26843545600,
+  "bytes_actual_change": 4294967296,
+  "cause_tag": "asset_repacking",
+  "confidence": "estimated",
+  "sources": [
+    {
+      "label": "Respawn Season 19 patch notes",
+      "url": "https://www.ea.com/games/apex-legends/news/season-19-ignite-patch-notes"
+    }
+  ],
+  "summary": "Season 19 update reported ~25 GB download for ~4 GB of new content (map updates, new legend, cosmetics). Estimated; pending depot manifest verification."
+}
