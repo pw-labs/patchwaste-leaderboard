@@ -86,10 +86,26 @@ import Base from '../layouts/Base.astro';
   const form = document.getElementById('signup-form') as HTMLFormElement | null;
   const success = document.getElementById('signup-success');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      form.classList.add('hidden');
-      success?.classList.remove('hidden');
+      const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Sending...';
+      }
+      try {
+        const fd = new FormData(form);
+        const resp = await fetch('/api/signup', { method: 'POST', body: fd });
+        if (!resp.ok) throw new Error(String(resp.status));
+        form.classList.add('hidden');
+        success?.classList.remove('hidden');
+      } catch (err) {
+        if (button) {
+          button.disabled = false;
+          button.textContent = 'Request free access';
+        }
+        alert('Signup failed. Try again in a moment.');
+      }
     });
   }
 </script>
