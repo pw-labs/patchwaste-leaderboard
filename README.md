@@ -42,14 +42,22 @@ The build will fail if a patch references a non-existent game slug or violates s
 
 ## Pre-publish checklist
 
-- [ ] Run depot manifest verification on the seed corpus and upgrade confidence labels where evidence supports it.
+- [ ] Run depot manifest verification on the seed corpus and upgrade confidence labels where evidence supports it. Runbook in `scripts/verify-depot/`.
 - [ ] Replace any `estimated` entries that cannot be upgraded with weaker but verifiable patches.
-- [ ] Wire the signup form to a real provider (Buttondown, Loops, Resend, or a Cloudflare Worker writing to D1).
-- [ ] Add favicon and OG image.
-- [ ] Add `robots.txt` and `sitemap` (Astro plugin).
-- [ ] Cloudflare Pages project + custom domain `leaderboard.patchwaste.dev`.
+- [x] Wire the signup form to a real provider. Posts to `/api/signup` (Cloudflare Pages Function) which forwards to Buttondown. Set `BUTTONDOWN_API_KEY` in the Pages project env vars.
+- [x] Add favicon and OG image.
+- [x] Add `robots.txt` and `sitemap` (Astro plugin).
+- [ ] Cloudflare Pages project + custom domain `leaderboard.patchwaste.dev`. See Deploy section below.
 - [ ] Set up a weekly GitHub Action that pulls fresh depot data and rebuilds.
 - [ ] Legal review of methodology page wording before send to press.
+
+## Deploy (Cloudflare Pages)
+
+1. Create a Cloudflare Pages project pointing at `pw-labs/patchwaste-leaderboard`.
+2. Build command `npm run build`. Build output `dist`. Node version 20.
+3. In Pages project settings, add environment variable `BUTTONDOWN_API_KEY` (Production scope) with the Buttondown API token. The Pages Function at `functions/api/signup.ts` reads it on POST.
+4. Custom domain `leaderboard.patchwaste.dev`. Add a CNAME record `leaderboard` → `<project>.pages.dev` in the `patchwaste.dev` zone. Cloudflare provisions the cert automatically.
+5. The `public/_headers` file applies security headers and asset cache rules. The `sitemap-index.xml` is generated at build time by `@astrojs/sitemap`.
 
 ## Pre-publish risks
 
